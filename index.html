@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Historia 💖</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #161210; /* Fondo oscuro elegante para resaltar el pergamino */
+            color: #2a1a12;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+        }
+
+        /* Pantalla de Inicio Limpia */
+        #cover-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #161210;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease, visibility 1s;
+            cursor: pointer;
+            padding: 20px;
+        }
+
+        .cover-text {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 26px;
+            color: #e6caa7;
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            animation: pulseText 2s infinite alternate;
+        }
+
+        @keyframes pulseText {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .start-btn {
+            background: #b3845c;
+            color: #161210;
+            border: none;
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: 'Georgia', serif;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Estructura del Pergamino Principal */
+        .scroll-wrapper {
+            width: 92%;
+            max-width: 620px;
+            margin: 40px auto;
+            display: none; /* Se activa al hacer clic en la portada */
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .parchment-block {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.88), rgba(253, 244, 232, 0.88)), url('pergamino.jpg.jpeg');
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #9e7351;
+            border-radius: 12px;
+            padding: 35px 30px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            display: none;
+        }
+
+        .parchment-block.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Tipografía Cursiva y Elegante para la Narración */
+        h2 {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            color: #51321e;
+            text-align: center;
+            font-size: 24px;
+            margin-top: 0;
+            border-bottom: 1px dashed #9e7351;
+            padding-bottom: 12px;
+        }
+
+        p {
+            font-family: 'Georgia', serif;
+            font-style: italic; /* Fuerza el estilo manuscrito/cursivo legible */
+            font-size: 18px;
+            line-height: 1.8;
+            text-align: justify;
+            text-indent: 20px;
+            margin: 15px 0;
+        }
+
+        /* Contenedores de Opciones e Interacción */
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid #b58d6f;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+
+        .quiz-title {
+            font-weight: bold;
+            font-style: normal;
+            text-align: center;
+            font-size: 16px;
+            color: #402413;
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: rgba(24df, 230, 210, 0.9);
+            border: 1px solid #9e7351;
+            color: #382012;
+            padding: 12px 15px;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            background: #9e7351;
+            color: #ffffff;
+        }
+
+        .next-btn {
+            display: block;
+            background: #735034;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 16px;
+            margin: 25px auto 0 auto;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .next-btn:hover {
+            background: #543923;
+        }
+
+        /* Lluvia de Corazones Final */
+        .heart {
+            position: fixed;
+            color: #d14757;
+            font-size: 28px;
+            z-index: 999;
+            animation: floatUp 2.5s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.4); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pantalla de Portada -->
+    <div id="cover-screen" onclick="openScroll()">
+        <div class="cover-text">“Hola, mi amor. Te invito a recorrer esta historia...”</div>
+        <button class="start-btn">Comenzar el viaje</button>
+    </div>
+
+    <!-- Contenedor del Pergamino Vertical -->
+    <div class="scroll-wrapper" id="main-scroll">
+
+        <!-- CAPÍTULO 1 -->
+        <div id="block-0" class="parchment-block visible">
+            <h2>Capítulo I: Destino</h2>
+            <p>Había una vez, en un rincón del bosque donde el tiempo parece detenerse, dos mundos que no sabían que estaban a punto de colisionar.</p>
+            <p>Un dulce panda vivía tranquilo en su casa de piedra, resguardado de cualquier contratiempo. Hasta que una pequeña catástrofe lo obligó a pedir ayuda. Escribió una carta y se la confió a una paloma mensajera.</p>
+            <p>Pero esa paloma no siguió el mapa; guiada por el destino, se desvió por completo de su rumbo y cayó en la ventana de la casa de una duendecita mágica, quien la recibió con una enorme sorpresa.</p>
+            
+            <div class="quiz-container">
+                <div class="quiz-title">🔒 Para que la historia avance, responde: ¿Qué problema le ocurrió al panda?</div>
+                <div class="options-list">
+                    <button class="option-btn" onclick="answerQuiz(0, true, '¡Exacto! Esa fue la pequeña gran catástrofe.')">A) Un pozo de los deseos apareció en su hogar.</button>
+                    <button class="option-btn" onclick="answerQuiz(0, false, '¡Nop! Ninguna bruja pasó por ahí.')">B) Una bruja hechizó su hogar.</button>
+                    <button class="option-btn" onclick="answerQuiz(0, false, '¡No! Las abejas andaban tranquilas en sus colmenas.')">C) Su casa fue infectada por abejas.</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAPÍTULO 2 -->
+        <div id="block-1" class="parchment-block">
+            <h2>Capítulo II: Conociéndonos</h2>
+            <p>Al recibir la carta, la duendecita respondió de inmediato y así empezó un tierno ir y venir de cartas.</p>
+            <p>Por esta hermosa obra del destino, estas dos almas se conocieron e empezaron a intercambiar no solo palabras, sino también sonrisas, confesiones y bellos sueños. Las palomas cruzaban el cielo sin descanso mientras las estaciones cambiaban a su alrededor.</p>
+            <p>El invierno se fue y el verano trajo consigo un plan perfecto: era hora de romper finalmente la distancia y verse por primera vez en persona.</p>
+
+            <div class="quiz-container">
+                <div class="quiz-title">🔒 Recuerda con el corazón: ¿Cuándo se vieron por primera vez en persona?</div>
+                <div class="options-list">
+                    <button class="option-btn" onclick="answerQuiz(1, false, '¡Nop! En febrero ya llevábamos camino recorrido.')">A) 18 de Febrero del 2026</button>
+                    <button class="option-btn" onclick="answerQuiz(1, true, '¡Correcto! Ese día el destino se hizo realidad.')">B) 18 de Enero del 2026</button>
+                    <button class="option-btn" onclick="answerQuiz(1, false, '¡No, año nuevo lo pasamos celebrando por separado!')">C) 01 de Enero del 2026</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAPÍTULO 3 -->
+        <div id="block-2" class="parchment-block">
+            <h2>Capítulo III: El Encuentro</h2>
+            <p>El camino fue largo, pero cada paso valió la pena. Se encontraron en un punto medio del sendero.</p>
+            <p>Aunque al principio hubo una pequeña confusión de dónde se encontrarían, todo se resolvió rápidamente y hoy esa simpática anécdota es contada entre risas.</p>
+            <p>Ambos fueron acompañados por amigos que observaban con atención a una distancia prudencial, actuando como protectores silenciosos y dándoles ese empujón de valentía que sus corazones necesitaban.</p>
+
+            <div class="quiz-container">
+                <div class="quiz-title">🔒 Memoria de ese día: ¿Quiénes estaban presentes cuidando el momento desde lejos?</div>
+                <div class="options-list">
+                    <button class="option-btn" onclick="answerQuiz(2, true, '¡Exacto! Ellos cuidaban nuestros pasos.')">A) Nuestros amigos</button>
+                    <button class="option-btn" onclick="answerQuiz(2, false, '¡Recuerda que no estábamos del todo solas!')">B) Nadie, fuimos completamente solas</button>
+                    <button class="option-btn" onclick="answerQuiz(2, false, 'Las palomitas descansaban ese día.')">C) Solo las palomas mensajeras</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAPÍTULO 4 -->
+        <div id="block-3" class="parchment-block">
+            <h2>Capítulo IV: Silencio en la Biblioteca</h2>
+            <p>Y entre dulces caminatas, la confianza floreció de una manera única. Sus pasos las guiaron hacia una imponente biblioteca oculta entre los árboles, un lugar verdaderamente hermoso y lleno de historias suspendidas en el aire.</p>
+
+            <div class="quiz-container">
+                <div class="quiz-title">🔒 Una pequeña trivia: Fue en ese hermoso lugar que un momento ocurrió, ¿qué pasó que risas provocó?</div>
+                <div class="options-list">
+                    <button class="option-btn" onclick="answerQuiz(3, false, '¡No! Ella iba con los pies bien firmes.')">A) La duendecita se cayó al suelo.</button>
+                    <button class="option-btn" onclick="answerQuiz(3, true, '¡Sí! Un tierno y adorable accidente.')">B) El panda dejó caer los libros al suelo.</button>
+                    <button class="option-btn" onclick="answerQuiz(3, false, '¡Ojalá, pero los libros eran normales!')">C) Un libro mágico empezó a hablar solo.</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAPÍTULO 4 CONTINUACIÓN -->
+        <div id="block-4" class="parchment-block">
+            <p>Cual obra literaria perfectamente escrita, entre ambos los levantaron del suelo. Fue ese preciso momento el que risas provocó y la confianza empezó a aumentar entre las dos.</p>
+            <p>Fue después de esto que al fin lograron quedarse a solas. Entre tímidas sonrisas, miradas profundas y una hermosa dosis de tensión, sus corazones empezaron a buscarse de una forma inevitable.</p>
+            
+            <button class="next-btn" onclick="revealBlock(5)">Seguir caminando hacia el río... 🌅</button>
+        </div>
+
+        <!-- CAPÍTULO 5 -->
+        <div id="block-5" class="parchment-block">
+            <h2>Capítulo V: El Puente y el Beso</h2>
+            <p>El sol empezó a caer lentamente, pintando el cielo del bosque con mágicos tonos naranjas y violetas. Guiadas por el instinto, llegaron a un hermoso puente de madera apartado sobre un río que cantaba bajito.</p>
+            <p>Allí, cobijadas por la intimidad del paisaje, intercambiaron los regalos perfectos que traían. La tensión subió de nuevo, transformándose en una maravillosa certeza.</p>
+            <p>La duendecita tomó la iniciativa con valentía, el dulce panda se dejó llevar por completo por la magia del instante, y sobre ese puente se dieron el primer beso que cambió nuestra historia para siempre. 💋</p>
+
+            <button class="next-btn" onclick="triggerFinal()">✨ Nuestro Quinto Mes ✨</button>
+        </div>
+
+        <!-- SECCIÓN FINAL -->
+        <div id="block-6" class="parchment-block" style="border-color: #b56e75;">
+            <h2 style="color: #8c323a;">💖 Felices 5 Meses 💖</h2>
+            <p>Hoy celebramos 5 meses de aquel vuelo desviado. 5 meses de ser panda y duende, de caminar juntas de la mano y de escribir este pergamino que apenas está comenzando.</p>
+            <p style="text-align: center; font-size: 20px; font-weight: bold; margin-top: 30px;">
+                “Felices 5 meses, mi vida. Gracias por dejar la ventana abierta para que llegara, para que yo pudiese entrar.”
+            </p>
+            <p style="text-align: center; font-size: 24px;">🐼 ❤️ 🧚</p>
+        </div>
+
+    </div>
+
+<script font-type="text/javascript">
+    function openScroll() {
+        document.getElementById('cover-screen').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('cover-screen').style.visibility = 'hidden';
+            const mainScroll = document.getElementById('main-scroll');
+            mainScroll.style.display = 'flex';
+            document.getElementById('block-0').classList.add('visible');
+        }, 1000);
+    }
+
+    function revealBlock(index) {
+        const nextBlock = document.getElementById(`block-${index}`);
+        if (nextBlock) {
+            nextBlock.classList.add('visible');
+            setTimeout(() => {
+                nextBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 150);
+        }
+    }
+
+    function answerQuiz(currentIndex, isCorrect, feedback) {
+        alert(feedback);
+        if (isCorrect) {
+            revealBlock(currentIndex + 1);
+        }
+    }
+
+    function triggerFinal() {
+        revealBlock(6);
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = ["❤️", "💖", "💝", "🌸"][Math.floor(Math.random() * 4)];
+            heart.style.left = (Math.random() * 100) + "vw";
+            heart.style.animationDuration = (Math.random() * 1.2 + 1.3) + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 2500);
+        }, 120);
+    }
+</script>
+
+</body>
+</html>
